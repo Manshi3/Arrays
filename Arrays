@@ -1,0 +1,58 @@
+BRUTE -
+    - we make a list/vector. we iterate.
+	- if the size of vector is 0 or if 0th index of vector is not equal to array's current index - we make cnt and iterate again.
+	- we check if the elements are equal or no, if yes, we inc cnt.
+	- later we check if cnt is bigger than n/3 or no, if yes, push_back all thse element in vector
+	- later we also check if the size of vector is equal to 2, we break it cus we dont need more than that
+	
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> ls;
+        for(int i = 0; i < n; i++) {
+            if(ls.size() == 0 || ls[0] != nums[i]) {
+                int cnt = 0;
+                for(int j = 0; j < n; j++) {
+                    if(nums[i] == nums[j]) {
+                        cnt++;
+                    }
+                }
+                if(cnt > n/3) ls.push_back(nums[i]);
+            }
+            if(ls.size() == 2) break;
+        }
+        return ls;
+    }
+};
+
+TC - O(n^2)
+SC - O(1)
+
+BETTER-
+	- obv we'll use hashmap.
+	- we'll make a vector to return, mini which is (int)(n/3) + 1.
+	- we'll iterate, pust every element inside map. there, we'll check if map has size equal to mini, if yes, push back all those in vector.
+	- we'll check if size of vector if 2, if yes, break cus we more than that is not possible.
+	- return vector;
+	
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> ls;
+        map<int, int> mpp;
+        int mini = (int)(n/3) + 1;
+        for(int i = 0; i < n; i++) {
+            mpp[nums[i]]++;
+            if(mpp[nums[i]] == mini) ls.push_back(nums[i]);
+            if(ls.size() == 2) break;
+        }
+        return ls;
+    }
+};
+
+TC - O(n) + O(nlogn)
+SC - O(n)
+
+OPTIMAL
