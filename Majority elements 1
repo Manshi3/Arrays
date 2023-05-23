@@ -1,0 +1,50 @@
+BRUTE - 
+    - we have 2 loops iterating & we check if they're equal or not, if yes, we inc cnt and return the arr[i]
+    - TC o(n^2)
+    - SC o(1)
+
+BETTER -
+    - we iterate and put every elements inside map, that's nlogn. then we iterate inside map, and check if it.second is larger than n/2 or not, if yes, we return that, that'll be o(n).
+    - TC o(nlogn + n)
+    - SC o(n)
+    
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int n = nums.size();
+        map<int, int> mpp;
+        for(int i = 0; i < n; i++) {
+            mpp[nums[i]]++;
+        }
+        for(auto it : mpp) {
+            if(it.second > n/2) return it.first;
+        }
+        return -1;
+    }
+};
+
+OPTIMAL -
+    - Moore's Voting Algorithm
+    - we go iterate and keep el and cnt updated.
+    - we update cnt if it is not 0 and el is same as before. cnt becomes 0 if prev element is not equal to el.
+
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int cnt = 0;
+        int el;
+        for(int i = 0; i < nums.size(); i++) {
+            if(cnt == 0) {
+                cnt = 1;
+                el = nums[i];
+            }
+            else if(nums[i] == el) {
+                cnt++;
+            }
+            else {
+                cnt--;
+            }
+        }
+        return el;
+    }
+};
