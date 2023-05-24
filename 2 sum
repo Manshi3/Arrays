@@ -1,0 +1,41 @@
+BRUTE
+	- we iterate once, take an element and then iterate again to check which one's giving k.
+	
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(i == j) continue;
+                if(nums[i] + nums[j] == target) return {i, j};
+            }
+        }
+        return {};
+    }
+};
+
+TC - O(n^2)
+SC - O(1)
+	
+BETTER
+	- hashmap
+	- make map, iterate. find the value which we have to find from map. find it in map, return it's index. keep the loop going.
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        map<int, int> mpp;
+        for(int i = 0; i < n; i++) {
+            int num = nums[i];
+            int more = target - num;
+            if(mpp.find(more) != mpp.end()) return {mpp[more], i};
+            mpp[num] = i;
+        }
+        return {};
+    }
+};
+
+TC - O(nlogn) hashmap
+SC - O(n) cus we dumping every element in hashmap
