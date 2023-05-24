@@ -56,3 +56,37 @@ TC - O(n) + O(nlogn)
 SC - O(n)
 
 OPTIMAL
+	- Moore's vooting algorithm
+	- since we have to return two elements, we'll take cnt1, cnt2, el1, el2
+	- we first iterate and check if cnt1 and cn2 0 or no, yes, then we initialize cnt1, cnt2 and el1, el2.
+	- same logic - we go through also, we initialize cnt and el and it gets degraded if elements aage are not same
+	- later we run a loop to chrck manually if el are elmenets from array or no
+	
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        int cnt1 = 0, cnt2 = 0;
+        int el1 = INT_MIN, el2 = INT_MIN; 
+
+        for(int i = 0; i < nums.size(); i++) {
+            if(cnt1 == 0 && el2 != nums[i]) cnt1 = 1, el1 = nums[i];
+            else if(cnt2 == 0 && el1 != nums[i]) cnt2 = 1, el2 = nums[i];
+
+            else if(el1 == nums[i]) cnt1++;
+            else if(el2 == nums[i]) cnt2++;
+
+            else cnt1--, cnt2--;
+        }
+        vector<int> ls;
+        cnt1 = 0, cnt2 = 0;
+        for(int i = 0; i < nums.size(); i++) {
+            if(el1 == nums[i]) cnt1++;
+            if(el2 == nums[i]) cnt2++;
+        }
+        int mini = (int)(nums.size()/3) + 1;
+        if(cnt1 >= mini) ls.push_back(el1);
+        if(cnt2 >= mini) ls.push_back(el2);
+        sort(ls.begin(), ls.begin());
+        return ls;
+    }
+};
