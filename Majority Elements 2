@@ -90,3 +90,6 @@ public:
         return ls;
     }
 };
+
+TC - O(n) + O(n) = O(2n)
+SC - O(1)
