@@ -1,0 +1,58 @@
+BRUTE 
+  - so we're given intervals, hme combine krke return krna hai
+  - Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+    Output: [[1,6],[8,10],[15,18]]
+  - sort
+  - input ke phle walo ko ans maanenge and aage chlte compare krenge kon smol kon nhi
+  - next interval ke first wale ko cmopare krenge pichle wale end se, agr smol hai to mtlb overlap kr rhe
+  
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        int n = intervals.size();
+        sort(intervals.begin(), intervals.end());
+        vector<vector<int>> ans;
+        for(int i = 0; i < n; i++) {
+            int start = intervals[i][0];
+            int end = intervals[i][1];
+            if(!intervals.empty() && end <= ans.back()[1]) continue;
+            for(int j = i + 1; j < n; j++) {
+                if(intervals[j][0] <= end) {
+                    end = max(end, intervals[j][1]);
+                } else {
+                    break;
+                }
+            }
+            ans.push_back({start, end});
+        }
+        return ans;
+    }
+};
+
+TC - O(nlogn) for sorting + O(2n) for going through every element twice = 
+    O(nlogn) + O(2n)
+SC - O(n) for storing all n char in ans
+
+OPTIMAL
+
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        int n = intervals.size();
+        sort(intervals.begin(), intervals.end());
+        vector<vector<int>> ans;
+        for(int i = 0; i < n; i++) {
+            if(intervals.empty() || intervals[i][0] > ans.back()[1]) {
+                ans.push_back(intervals[i]);
+            }
+            else {
+                ans.back()[1] = max(ans.back()[1], intervals[i][1]);
+            }
+        }
+        return ans;
+    }
+};
+
+TC - O(nlogn) + O(n)
+SC - O(n)
+   - 
