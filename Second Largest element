@@ -1,0 +1,81 @@
+BRUTE - 
+
+vector<int> getSecondOrderElements(int n, vector<int> a) {
+    // Write your code here.
+    sort(a.begin(), a.end());
+    int lar = n-1;
+    int seclar = INT_MIN;
+    for(int i = n-2; i >= 0; i--) {
+        if(a[i] != lar) {
+            seclar = a[i];
+            break;
+        }
+    }
+    return seclar;
+}
+
+TC - O(nlogn + n)
+SC - O(1)
+
+BETTER - 
+
+vector<int> largest(int n, vector<int> a) {
+    int lar = a[0];
+    for(int i = 0; i < n; i++) {
+        if(a[i] > lar) lar = a[i];
+    }
+}
+
+vector<int> getSecondOrderElements(int n, vector<int> a) {
+    int seclar = INT_MIN;
+    for(int i = 0; i < n; i++) {
+        if(a[i] > seclar && a[i] != largest) {
+            seclar = a[i];
+        }
+    }
+    return seclar;
+}
+
+TC - O(n + n) = 2(n)
+SC - O(1)
+
+OPTIMAL - 
+
+int secondlargest(int n, vector<int> &arr) {
+    int largest = arr[0];
+    int seclargest = INT_MIN;
+    for(int i = 1; i < n; i++) {
+        if(arr[i] > largest) {
+            seclargest = largest;
+            largest = arr[i];
+        }
+        else if(arr[i] < largest && arr[i] > seclargest) {
+            seclargest = arr[i];
+        }
+    }
+    return seclargest;
+}
+
+int secondsmallest(int n, vector<int> &arr) {
+    int smallest = arr[0];
+    int secsmallest = INT_MAX;
+    for(int i = 1; i < n; i++) {
+        if(arr[i] < smallest) {
+            secsmallest = smallest;
+            smallest = arr[i];
+        }
+        else if(arr[i] < secsmallest && arr[i] != smallest) {
+            secsmallest = arr[i];
+        }
+    }
+    return secsmallest;
+}
+
+vector<int> getSecondOrderElements(int n, vector<int> a) {
+    int largenum = secondlargest(n, a);
+    int smalnum = secondsmallest(n, a);
+    return {largenum, smalnum};
+}
+
+TC - O(n)
+SC - O(1)
