@@ -1,0 +1,43 @@
+BRUTE - 
+  
+  - unique elements chaiye? set. and set se nikaal ke elements return crow.
+  
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        set<int> st;
+        for(int i = 0; i < n; i++) {
+            st.insert(nums[i])++;
+        }
+        int index = 0;
+        for(auto it : st) {
+            nums[index] = it;
+            index++;
+        }
+        return 
+    }
+};
+
+TC - O(nlogn) for set, O(n) for loop
+SC - O(n)
+
+OPTIMAL - 
+
+  - 2 pointers. ek aage, ek just piche. compare kro kya i ke paas nhi hai, nhi hai mtlb unique hai, vo store krdo, end me return
+  
+ class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int i = 0; 
+        for(int j = i + 1; j < nums.size(); j++) {
+            if(nums[i] != nums[j]) {
+                nums[i + 1] = nums[j];
+                i++;
+            }
+        }
+        return (i+1);
+    }
+};
+
+TC - O(n)
+SC - O(1)
