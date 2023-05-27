@@ -49,3 +49,46 @@ int main() {
 
 TC - O(d) for putting elements in temp, O(n-d) for shifting, O(d) for puttinh the temp back again. = O(n+d)
 SC - O(d) for temp array
+
+OPTIMAL
+
+    - Reverse the first k elements
+    - reverse the elements after k elements
+    - reverse the whole array again, you'll get the answer
+    
+#include <bits/stdc++.h> 
+#include <iostream>
+using namespace std;
+
+int rotateLeft(int arr[], int n, int k) {
+    reverse(arr, arr+k);
+    reverse(arr+k, arr+n);
+    reverse(arr, arr+n);
+}
+
+int main() {
+    int n;
+    cin >> n; 
+    int arr[n];
+    for(int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    int k;
+    cin >> k;
+    
+    rotateLeft(arr, n, k);
+     
+    for(int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+
+    return 0;
+}
+
+TC - O(k) for 1st reverse
+	O(n-k) for 2nd reverse
+	O(k) for 3rd reverse
+	
+	total = O(2n)
+	
+SC - O(1)
