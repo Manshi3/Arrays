@@ -46,3 +46,6 @@ int main() {
 
     return 0;
 }
+
+TC - O(d) for putting elements in temp, O(n-d) for shifting, O(d) for puttinh the temp back again. = O(n+d)
+SC - O(d) for temp array
