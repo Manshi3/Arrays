@@ -1,0 +1,95 @@
+BRUTE - 
+
+	- 2 loops
+	- we take flag and check with two loops id any number is missing or not, if yes, the flag stays 0 only and return that index's element which is missing.
+	
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        for(int i = 0; i < nums.size(); i++) {
+            bool flag = 0;
+            for(int j = 0; j < nums.size(); j++) {
+                if(nums[j] == i) {
+                    flag = 1;
+                    break;
+                }
+            }
+            if(flag == 0) return i;
+        }
+        return {};
+    }
+};
+
+TC - O(n^2)
+SC - O(1)
+
+BETTER - 
+
+	- hashing
+	- we keep 0 in hashmap, we iterate through array and if the element is present, we mark it 1.
+	- we iterate through hashmap now and check if there is any 0 or no, if yes, return that index.
+	
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size();
+        int hash[n+1] = {0};
+        for(int i = 0; i < n-1; i++) {
+            hash[nums[i]] = 1;
+        }
+        for(int i = 0; i < nums.size(); i++) {
+            if(hash[i] == 0) return i;
+        }
+        return -1;
+    }
+};
+
+TC - O(n) + O(n) for two loops
+SC - O(n) for hash
+
+OPTIMAL - 
+
+	- sum
+	- if size n is 5, then we find sum of first n elements. 
+	- then we find sum of elements present in array.
+	
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size();
+        int sumN = (n*(n+1))/2;
+        int sumEl = 0;
+        for(int i = 0 ; i < n; i++) {
+            sumEl += nums[i];
+        }
+        int more = sumN - sumEl;
+        return more;
+    }
+};
+
+TC - O(n)
+SC - O(1)
+
+OPTIMAL 2 -
+
+	- XOR
+	- we insert the elements from 1 to n into xor1. and element from array into xor2. if we find xor of xor1 ^ xor2, we get the element which does not have a partner.
+	- and that will be put answer.
+	
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size();
+        int xor1 = 0, xor2 = 0;
+        for(int j = 0; j < n; j++) {
+            xor2 ^= nums[j];
+            xor1 ^= (j+1);
+        }
+        return xor1 ^ xor2;
+    }
+};
+
+TC - O(n) 
+SC - O(1)
+this is better because preveiously we havr to do sum, if n is 10^5, the sum will exceed the limit and will overflow, for that, we'll take long long, 
+but that takes up a lil too space compared to just int.
