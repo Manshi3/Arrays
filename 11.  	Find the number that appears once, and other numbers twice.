@@ -1,0 +1,89 @@
+BRUTE - 
+
+    - 2 loops
+    - iterate once, update num. iterate again and compare with num and if same, update cnt, later if cnt is just 1 instead of 2, return that num that has only 1.
+
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        for(int i = 0; i < nums.size(); i++) {
+            int num = nums[i];
+            int cnt = 0;
+            for(int j = 0; j < nums.size(); j++) {
+                if(nums[j] == num) {
+                    cnt++;
+                }
+            }
+            if(cnt == 1) return num;
+        }
+        return -1;
+    }
+};
+
+TC - O(n^2)
+SC - O(1)
+
+BETTER - 
+
+    - hash array
+    - first loop for figuring out the length of given array, so that we give hashmap the size to form indexes.
+	- second loop for putting the elements for putting elements of array into hashpmap
+	- third loop for checking which element comes in 1 or 2. whichever element occurs once, we return that
+
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int maxi = INT_MIN;
+        for(int i = 0; i < nums.size(); i++) {
+            maxi = max(maxi, nums[i]);
+        }
+        hash[maxi+1] = {0};
+        for(int i = 0; i < nums.size(); i++) {
+            hash[nums[i]]++;
+        }
+        for(int i = 0; i < nums.size(); i++) {
+            if(hash[nums[i]] == 1) return i;
+        }
+        return -1;
+    }
+};
+
+TC - O(3^n)
+SC - O(n)
+
+BETTER BETTER - 
+
+	- map data structures
+
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        map<int, int> mpp;
+        for(int i = 0; i < nums.size(); i++) {
+            mpp[nums[i]]++;
+            for(auto it : mpp) {
+                if(it.second == 1) return it.first;
+            }
+        }
+        return -1;
+    }
+};
+
+TC - O(nlogm + n/2+1)
+SC - O(n/2+1)
+
+OPTIMAL
+
+	- Xor
+	- assign ans as 0, and then xor it with entire arr[i]
+
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int ans = 0;
+        for(int i = 0; i < nums.size(); i++) {
+            ans ^= nums[i];
+        }
+        return ans;
+    }
+};
