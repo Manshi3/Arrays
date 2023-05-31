@@ -1,0 +1,54 @@
+BRUTE - 
+
+  - 2 loops
+  - one for updating cnt1, cnt2, cnt3 of counts of 0s, 1s, 2s.
+  - second loop for putting 0s from 0 to cnt1. putting 1s from cnt1 to cnt1+cnt2. ptting 2s from cnt1+cnt2 to n.
+  
+ class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        // brute
+        int cnt1 = 0, cnt2 = 0, cnt3 = 0;
+        for(int i = 0; i < nums.size(); i++) {
+            if(nums[i] == 0) cnt1++;
+            if(nums[i] == 1) cnt2++;
+            if(nums[i] == 2) cnt3++;
+        }
+        for(int i = 0; i < cnt1; i++) nums[i] = 0;
+        for(int i = cnt1; i < cnt1+cnt2; i++) nums[i] = 1;
+        for(int i = cnt1+cnt2; i < nums.size(); i++) nums[i] = 2;
+    }
+};
+
+TC - O(2n)
+SC - O(1)
+
+OPTIMAL - 
+  
+  - DUTCH NATIONAL FALG - DNF
+
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int n = nums.size();
+        int low = 0;
+        int mid = 0;
+        int high = n-1;
+        for(int i = 0; i < n; i++) {
+            if(nums[mid] == 0) {
+                swap(nums[low], nums[mid]);
+                low++, mid++;
+            }
+            else if(nums[mid] == 1) {
+                mid++;
+            }
+            else {
+                swap(nums[mid], nums[high]);
+                high--;
+            }
+        }
+    }
+};
+
+TC - O(n)
+SC - O(1)
