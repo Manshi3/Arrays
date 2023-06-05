@@ -1,0 +1,55 @@
+BRUTE - 
+	
+	- 2 loops
+	- 1 loop for iterating through array and if element is positive, we put it in pos vector. if element is negative, we put it in beg vector.
+	- 2nd loop for iterating through half half vector of pos and neg and putting them in ans vector acc to the question and return ans vector
+	
+class Solution {
+public:
+    vector<int> rearrangeArray(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> ans;
+        vector<int> pos;
+        vector<int> neg;
+        for(int i = 0; i < n; i++) {
+            if(nums[i] > 0) pos.push_back(nums[i]);
+            else neg.push_back(nums[i]);
+        }
+        for(int i = 0; i < n/2; i++) {
+            ans.push_back(pos[i]);
+            ans.push_back(neg[i]);
+        }
+        return ans;
+    }
+};
+
+TC - O(2n)
+SC - O(n)
+
+OPTIMAL - 
+
+	- 1 loop
+	- we iterate through array and check if the element is positive, we start puttinhg it in 0th index then increament it with +2. same with negivative but start with 1th index.
+
+class Solution {
+public:
+    vector<int> rearrangeArray(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> ans(n, 0);
+        int posIndex = 0, negIndex = 1;
+        for(int i = 0; i < n; i++) {
+            if(nums[i] > 0) {
+                ans[posIndex] = nums[i];
+                posIndex += 2;
+            }
+            else {
+                ans[negIndex] = nums[i];
+                negIndex += 2;
+            }
+        }
+        return ans;
+    }
+};
+
+TC - O(n)
+SC - O(n)
