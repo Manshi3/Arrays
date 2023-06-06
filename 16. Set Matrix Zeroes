@@ -1,0 +1,47 @@
+BRUTE - 
+
+	- we iterate through the matrix, if 0 found, we mark it's corresponding elements as -1.
+	- we iterate again through matrix and whereever there's -1, we mark it as 0 then.
+	- to mark rows from 0 to -1, we have separate loop.
+	- to mark cols from 0 to -1, we have separate loop.
+	
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        void markrows(vector<vector<int>> &matrix, int n, int m, int i) {
+            for(int j = 0; j < n; j++) {
+                if(matrix[i][j] != 0) matrix[i][j] = -1;
+            }
+        }
+        void markcols(vector<vector<int>> &matrix, int n, int m, int j) {
+            for(int i = 0; i < m; i++) {
+                if(matrix[i][j] != 0) matrix[i][j] = -1;
+            }
+        }
+        void setZeroes(vector<vector<int>>& matrix) {
+            int n = matrix.size();
+            int m = matrix[0].size();
+            // set 1 as -1
+            for(int i = 0; i < n; i++) {
+                for(int j = 0; j < m; j++) {
+                    if(matrix[i][j] == 0) {
+                        markrows(matrix, n, m, i);
+                        markcols(matrix, n, m, j);
+                    }
+                }
+            }
+
+            // set -1 as 0
+            for(int i = 0; i < n; i++) {
+                for(int j = 0; j < m; j++) {
+                    if(matrix[i][j] == -1) {
+                        matrix[i][j] = 0;
+                    }
+                }
+            }
+        }   
+    }
+};
+
+TC - O((n*m) * (n+m) + (n*m))
+SC - O(1)
