@@ -1,0 +1,49 @@
+BRUTE - 
+
+	- 2 loops - ek ke andr ek
+	- a loop for 1st element, taking 1st element as leader. second loop for 2nd element. comparing it with 1st element. if 2nd elemnt is larger, flag turns false.
+	- later we see if flag still remains true after coming from loop then we put that element in ans vector and return.
+
+vector<int> superiorElements(vector<int>&a) {
+    int n = a.size();
+    vector<int>ans;
+    for (int i = 0; i < n; i++) {
+        bool leader = true;
+        for(int j = 0; j < n; j++) {
+            if(a[j] > a[i]) {
+                leader = false;
+                break;
+            }
+        }
+        if(leader == true) {
+            ans.push_back(a[i]);
+        }
+    }
+    return ans;
+}
+
+TC - O(2n)
+SC - O(1)
+	O(n) space used for returning the ans but wasnt used in solving the problem
+	
+OPTIMAL - 
+
+	- we make maxi and keep it for putting only maximum numbers. we make leaders vectors and put the maximum numbers in it. we iterate and update maxi and vector.
+	- later we were said in question that it wants sorted elemnts in ans so we sort and return it.
+
+vector<int> superiorElements(vector<int>&a) {
+    int n = a.size();
+    int maxi = INT_MIN;
+    vector<int> leaders;
+    for(int i = n-1; i >= 0; i--) {
+        if(a[i] > maxi) {
+            leaders.push_back(a[i]);
+        }
+		maxi = max(maxi, a[i]);
+    }
+    sort(leaders.begin(), leaders.end());
+    return leaders;
+}
+
+TC - O(n)
+SC - O(1)
