@@ -43,5 +43,78 @@ public:
     }
 };
 
-TC - O((n*m) * (n+m) + (n*m))
+TC - O((n*m) * (n+m) + (n*m)) = (N*M)^3
+SC - O(1)
+
+BETTER - 
+
+	- made two rows and cols of row size and col size resp assign 0.
+	- iterate the matrix, if 0 found, update the row and col with 1. keep doing this.
+	- iterate again in the matrix, if row or col is 1, update the matrix row and col with 0.
+	
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+
+        vector<int> row(n,0);
+        vector<int> col(m,0);
+
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                if(matrix[i][j] == 0) {
+                    row[i] = 1, col[j] = 1;
+                }
+            }
+        }
+
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                if(row[i] == 1 || col[j] == 1) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+};
+TC - O(2*n*m)
+SC - O(n) + O(m)
+
+OPTIMAL - 
+
+	- Since we were taking a lot of space in previous approach. we'll make row and col inside the matrix only.
+	- we can do that but matrix[0][0] will have both col and row collide. so we'll take row0 for first index of matrix.
+	- now same as prev
+	
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+
+        int row0 = 1;
+
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                if(matrix[i][j] == 0) {
+                    if(j != 0) matrix[0][j] = 0;
+                    else row0 = 0;
+                    matrix[i][0] = 0;
+                }
+            }
+        }
+
+        for(int i = 1; i < n; i++) {
+            for(int j = 1; j < m; j++) {
+                if(matrix[0][j] == 0 || matrix[i][0] == 0) matrix[i][j] = 0;
+            }
+        }
+
+        if(matrix[0][0] == 0) for(int j = 0; j < m; j++) matrix[0][j] = 0;
+        if(row0 == 0) for(int i = 0; i < n; i++) matrix[i][0] = 0;
+    }
+};
+
+TC - O(2 * n * m)
 SC - O(1)
