@@ -1,3 +1,5 @@
+Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
+
 BRUTE -
     - we make a list/vector. we iterate.
 	- if the size of vector is 0 or if 0th index of vector is not equal to array's current index - we make cnt and iterate again.
@@ -9,20 +11,19 @@ class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums) {
         int n = nums.size();
-        vector<int> ls;
+        vector<int> ans;
+
         for(int i = 0; i < n; i++) {
-            if(ls.size() == 0 || ls[0] != nums[i]) {
+            if(ans.size() == 0 || ans[0] != nums[i]) {
                 int cnt = 0;
                 for(int j = 0; j < n; j++) {
-                    if(nums[i] == nums[j]) {
-                        cnt++;
-                    }
+                    if(nums[i] == nums[j]) cnt++;
                 }
-                if(cnt > n/3) ls.push_back(nums[i]);
+                if(cnt > (n/3)) ans.push_back(nums[i]);
             }
-            if(ls.size() == 2) break;
+            if(ans.size() == 2) break;
         }
-        return ls;
+        return ans;
     }
 };
 
@@ -30,7 +31,7 @@ TC - O(n^2)
 SC - O(1)
 
 BETTER-
-	- obv we'll use hashmap.
+	- obv we'll use a hashmap.
 	- we'll make a vector to return, mini which is (int)(n/3) + 1.
 	- we'll iterate, pust every element inside map. there, we'll check if map has size equal to mini, if yes, push back all those in vector.
 	- we'll check if size of vector if 2, if yes, break cus we more than that is not possible.
@@ -49,6 +50,24 @@ public:
             if(ls.size() == 2) break;
         }
         return ls;
+    }
+};
+
+or 
+
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> ans;
+        map<int, int> mpp;
+        for(int i = 0; i < n; i++) {
+            mpp[nums[i]]++;
+        }
+        for(auto it : mpp) {
+            if(it.second > n/3) ans.push_back(it.first);
+        }
+        return ans;
     }
 };
 
