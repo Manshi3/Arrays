@@ -41,7 +41,7 @@ public:
 };
 
 OPTIMAL -
-    - Moore's Voting Algorithm
+    - Moore's Voting Algorithm - we move, if similar, we update cnt. if not similar, we decrease. Cancellation logic.
     - we go iterate and keep el and cnt updated.
     - we update cnt if it is not 0 and el is same as before. cnt becomes 0 if prev element is not equal to el.
     - TC - O(n)
