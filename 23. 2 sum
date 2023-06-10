@@ -1,3 +1,5 @@
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
 BRUTE
 	- we iterate once, take an element and then iterate again to check which one's giving k.
 	
@@ -6,8 +8,7 @@ public:
     vector<int> twoSum(vector<int>& nums, int target) {
         int n = nums.size();
         for(int i = 0; i < n; i++) {
-            for(int j = 0; j < n; j++) {
-                if(i == j) continue;
+            for(int j = i + 1; j < n; j++) {
                 if(nums[i] + nums[j] == target) return {i, j};
             }
         }
@@ -20,6 +21,7 @@ SC - O(1)
 	
 BETTER
 	- hashmap
+	- we will pick an element from hashmap and check how much we need more to complete target and then find that number!
 	- make map, iterate. find the value which we have to find from map. find it in map, return it's index. keep the loop going.
 
 class Solution {
@@ -28,10 +30,9 @@ public:
         int n = nums.size();
         map<int, int> mpp;
         for(int i = 0; i < n; i++) {
-            int num = nums[i];
-            int more = target - num;
+            int more = target - nums[i];
             if(mpp.find(more) != mpp.end()) return {mpp[more], i};
-            mpp[num] = i;
+            mpp[nums[i]] = i;
         }
         return {};
     }
