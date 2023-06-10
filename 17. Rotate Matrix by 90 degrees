@@ -1,0 +1,41 @@
+BRUTE - 
+
+    - we see a pattern in it. jha pe element matrix pe hai usko ek particual way me rkhne se vo rotate honge.
+
+vector<int> ans;
+for(int i = 0; i < n; i++) {
+    for(int j = 0; j < m; j++) {
+        ans[n-1-i][j] = arr[i][j];
+    }    
+}
+
+TC - O(n^2)
+SC - O(n^2)
+
+BETTER - 
+
+    - inplace
+    - transpose - col becomes row. row becomes col.
+    - transpose kro. uske baad reverse karo.
+    - transpose krne ke bhi tarike hai - hmne notice kiya ki diagonal dono me same hai so ham diagonal ko change nhi krenge baaki krenge. uske baad hmne dekha ki elements 
+    diagonal ke aaju baaju ke swap ho rhe hai so that's what we'll do too
+
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        for(int i = 0; i < n-1; i++) {
+            for(int j = i + 1; j < n; j++) {
+                swap(matrix[i][j], matrix[j][i]);
+            }
+        }
+
+        for(int i = 0; i < n; i++) {
+            reverse(matrix[i].begin(), matrix[i].end());
+        }
+    }
+};
+
+TC - O(n/2 * n/2) for transpose
+    O(n * n/2)
+SC - O(0) We're doing in place
