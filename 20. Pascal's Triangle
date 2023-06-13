@@ -1,1 +1,106 @@
+Variation 1
+In this case, we are given the row number r and the column number c, and we need to find out the element at position (r,c). 
 
+- we'll put the formula of ncr init.
+
+int nCr(int n, int r) {
+	long long res = 1;
+	for(int i = 0; i < row; i++) {
+		res = res * (n - i);
+	    res = res / (i - 1);
+	    ans.push_back(res);
+	}
+	return res;
+}
+
+TC - O(r)
+SC - O(1)
+
+Variation 2
+Given the row number n. Print the n-th row of Pascal’s triangle.
+
+Brute - 
+int nCr(int n, int r) {
+    long long res = 1;
+    for (int i = 0; i < r; i++) {
+        res = res * (n - i);
+        res = res / (i + 1);
+    }
+    return res;
+}
+void pascalTriangle(int n) {
+    // printing the entire row n:
+    for (int c = 1; c <= n; c++) {
+        cout << nCr(n - 1, c - 1) << " ";
+    }
+    cout << "n";
+}
+
+Better - 
+void pascalTriangle(int n) {
+	long long ans = 1;
+	cout << ans << " ";
+	for(int col = 1; col <= n; col++) {
+		ans = ans * (n - col);
+		ans = ans / col;
+		cout << ans << " ";
+	}
+}
+TC - O(n)
+SC - O(1)
+
+Variation 3
+Given an integer numRows, return the first numRows of Pascal's triangle.
+
+Brute -
+class Solution {
+public:
+    int ncr(int row, int col) {
+        long long ans = 1;
+        for(int col = 0; col < row; col++) {
+            ans = ans * (col - row);
+            ans = ans / (col + 1);
+        }
+        return ans;
+    }
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> ans;
+        for(int row = 1; row <= numRows; row++) {
+            vector<int> temp;
+            for(int col = 1; col <= row; col++) {
+                temp.push_back(ncr(row-1, col-1));
+            }
+            ans.push_back(temp);
+        }
+        return ans;
+    }
+};
+
+TC - O(N^3)
+SC - O(1)
+
+Better
+class Solution {
+public:
+    vector<int> generateRows(int row) {
+        vector<int> ansRow;
+        ansRow.push_back(1);
+        long long ans = 1;
+        for(int col = 1; col < row; col++) {
+            ans = ans * (row - col);
+            ans = ans / (col);
+            ansRow.push_back(ans);
+        }
+        return ansRow;
+    }
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> ans;
+        for(int i = 1; i <= numRows; i++) {
+            ans.push_back(generateRows(i));
+        }
+        return ans;
+    }
+};
+
+TC - O(n*r)
+SC - O(1)
