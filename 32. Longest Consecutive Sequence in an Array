@@ -1,0 +1,103 @@
+Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+
+BRUTE - 
+
+     - extream naive approach- we iterate through array carrying longst and cnt and if x+1 is found in the array, we update cnt and longest. and return longest.
+     
+class Solution {
+public:
+    int ls(int x, vector<int> &nums) {
+        for(int i = 0; i < nums.size(); i++) {
+            if(nums[i] == x) return true;
+        }
+        return false;
+    }
+    int longestConsecutive(vector<int>& nums) {
+        int longest = 1;
+        int cnt = 0;
+        for(int i = 0; i < nums.size(); i++) {
+            int x = nums[i];
+            while(ls(x+1, nums) == true) {
+                x += 1;
+                cnt += 1;
+                longest = max(longest, cnt);
+            }
+        }
+        return longest;
+    }
+};
+
+TC - O(n^2)
+SC - O(1)
+
+BETTER - 
+
+    - sort
+    - then check if prev element is same as lastelement, if yes, update cnt with +1 and lastelemt with current elment.
+    - if current element is same as lastelement, we dont do anything
+    - if current element is not same last element, we start the cnt again and update lastelement with current element
+    
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        if(nums.size() == 0) return 0;
+        
+        sort(nums.begin(), nums.end());
+
+        int longest = 1;
+        int cnt = 1;
+        int lastelement = INT_MIN;
+
+        for(int i = 0; i < nums.size(); i++) {
+            if(nums[i]-1 == lastelement) {
+                cnt += 1;
+                lastelement = nums[i];
+            }
+            else if(nums[i] != lastelement) {
+                cnt = 1;
+                lastelement = nums[i];
+            }
+            longest = max(longest, cnt);
+        }
+        return longest;
+    }
+};
+
+TC - O(nlogn) + O(n)
+SC - O(1)
+but we distorting given array by sorting
+
+OPTIMAL -
+
+    - unordered set
+    - we take the first element and look for less than that. once found, we mark it first element and then we look for greater than that and update cnt. update longest.
+    
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> st;
+        int longest = 0;
+
+        if(nums.size() == 0) return 0;
+        for(int i = 0; i < nums.size(); i++) {
+            st.insert(nums[i]);
+        }
+        for(auto it : st) {
+            if(st.find(it - 1) == st.end()) {   // first element of the sequence
+                int cnt = 1;
+                int x = it;
+                while(st.find(x+1) != st.end()) {   // do we have the next element? if yes..
+                    x += 1;
+                    cnt += 1;
+                }
+                longest = max(longest, cnt);
+            }
+        }
+        return longest;
+    }
+};
+
+unordered set takes O(n) for best case. it takes O(1) for the worst case. we'll consider O(1) here.
+
+TC - O(3n) for the loops
+SC - O(n) for set
