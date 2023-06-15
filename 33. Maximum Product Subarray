@@ -25,7 +25,12 @@ SC - O(1)
 OPTIMAL 
 
   easy peasy
-  
+  - agr kisi bhi jag two -ve integers hote hai, vo -- hoke +ve product dete hai.
+  - agr kisi bhi jag odd number of -ves hote hai, to product bhi vo -ve hi dete hai
+  - issliye isme bhi ham agr array me two -ves hai to just go ahead, product all of it and return to maxi.
+  - agar odd number of -ves hai array me to ek -ve nikaal do and prefix, suffix me divide krdo. 
+  - prefix aage se start krenge, maxi update krte jaenge. suffix piche se start krenge, maxi update krte jaenge. jo max hoga vo return ho jaega.
+  - just saying agr bich me 0 aata hai to do concider it in the prefix, suffix, just start from 1 again though. broader persp se dekha jae to 0 aate hi we dividing array into smaller parts.
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
